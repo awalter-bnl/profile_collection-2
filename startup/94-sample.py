@@ -1268,11 +1268,11 @@ class Sample_Generic(CoordinateSystem):
         md_current = { k : v for k, v in RE.md.items() } # Global md
 
         #md_current['detector_sequence_ID'] = caget('XF:11BMB-ES{Det:SAXS}:cam1:FileNumber_RBV')
-        #md_current['detector_sequence_ID'] = caget('XF:11BMB-ES{}:cam1:FileNumber_RBV'.format(pilatus_Epicsname))
-        if detector.name is 'pilatus300':
-            md_current['detector_sequence_ID'] = caget('XF:11BMB-ES{Det:SAXS}:cam1:FileNumber_RBV'.format(pilatus_Epicsname))
-        elif detector.name is 'pilatus2M':
-            md_current['detector_sequence_ID'] = caget('XF:11BMB-ES{Det:PIL2M}:cam1:FileNumber_RBV'.format(pilatus_Epicsname))
+        md_current['detector_sequence_ID'] = caget('XF:11BMB-ES{}:cam1:FileNumber_RBV'.format(pilatus_Epicsname))
+        #if detector.name is 'pilatus300':
+            #md_current['detector_sequence_ID'] = caget('XF:11BMB-ES{Det:SAXS}:cam1:FileNumber_RBV'.format(pilatus_Epicsname))
+        #elif detector.name is 'pilatus2M':
+        #md_current['detector_sequence_ID'] = caget('XF:11BMB-ES{Det:PIL2M}:cam1:FileNumber_RBV'.format(pilatus_Epicsname))
           
         md_current.update(get_beamline().get_md())
         
