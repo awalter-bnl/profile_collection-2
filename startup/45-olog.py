@@ -69,6 +69,12 @@ TEMPLATES['ID_calibration'] = single_motor_template
 #from jinja2 import Template # What is this needed for?
 
 # connect olog
+# TODO : replace with 
+# import nslsii
+# nslsii.configure_olog(get_ipython().user_ns, desc_dispatch=TEMPLATES)
+# once PR is merged (and packages updated)
+
+#### TO BE REPLACED
 from functools import partial
 from pyOlog import SimpleOlogClient
 from bluesky.callbacks.olog import logbook_cb_factory
@@ -87,7 +93,9 @@ logbook = simple_olog_client
 
 
 #logbook_cb = logbook_cb_factory(configured_logbook_func)
+# make custom logbook cb fatory
 logbook_cb = logbook_cb_factory(configured_logbook_func, desc_dispatch=TEMPLATES)
+
 
 def logbook_cb_q(*args, **kwargs):
     try:
@@ -97,19 +105,7 @@ def logbook_cb_q(*args, **kwargs):
         print("WARNING: logbook_cb threw error: {}".format(sys.exc_info()[0]))
 
 
+# takes care of queueing olog requests
 # Comment this line to turn off automatic log entries from bluesky.
-#RE.subscribe('start', logbook_cb)
-RE.subscribe('start', logbook_cb_q)
-
-
-
-
-# Note: According to Yugang, to get the filename from the databroker (after the end of a run), you can do something like:
-#header = db[-1] # Get most recent record
-#events = db.get_events(header)
-#  events_list = [ ev for ev in events ]
-#keys = [k for k, v in header.descriptors[0]['data_keys'].items()     if 'external' in v]
-#key, = keys
-#filenames =  [  str( ev['data'][key][0]) + '_'+ str(ev['data'][key][2]['seq_id']) for ev in events]     
-# Refer to Yugang's chxanalys package for full code.
-#    https://github.com/yugangzhang/chxanalys
+import nslsii
+nslsii.configure_olog(get_ipython().user_ns, cb=logbook_cb_q)

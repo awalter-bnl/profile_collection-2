@@ -1,5 +1,7 @@
 def detselect(detector_object, suffix="_stats1_total"):
     """Switch the active detector and set some internal state"""
+    stats_name = detector_object.name + suffix
+    detector_object.hints['fields'].update(stats_name)
 
     if isinstance(detector_object, (list, tuple)):
         gs.DETS = detector_object
